@@ -76,7 +76,7 @@
       </form>
       <div class="row">
         <div class="col-xs-12">
-          <a href="/register"> <button class="btn btn-danger btn-block btn-flat"><b>Sudah Punya Akun? Login</b></button> </a>
+          <a href="/login"> <button class="btn btn-danger btn-block btn-flat"><b>Sudah Punya Akun? Login</b></button> </a>
         </div>
       </div>
 
