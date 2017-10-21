@@ -32,6 +32,8 @@ Route::get('/LupaPassword', 'DepanController@LupaPassword');
 Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin', 'AdminController@Dashboard');
   Route::get('/admin/dataadmin', 'AdminController@DataAdmin');
+  Route::get('/admin/dataadmin/tambah', 'AdminController@TambahDataAdmin');
+  Route::POST('/admin/dataadmin/tambah', 'AdminController@storeTambahDataAdmin');
   Route::get('/admin/dataadmin/{id}/edit', 'AdminController@EditDataAdmin');
 });
 

@@ -13,7 +13,24 @@
     <section class="content">
 
       <!-- Info boxes -->
-      <div class="box">
+      <div class="box box-primary">
+            <div class="box-header">
+              @if (session('success'))
+                <div class="callout callout-success">
+                  <h4>Berhasil</h4>
+
+                  <p> {{ session('success') }} </p>
+                </div>
+              @endif
+
+              <div class="row">
+                <div class="col-sm-2">
+                  <a href="/admin/dataadmin/tambah">
+                    <button type="button" class="btn btn-block btn-info btn"> <i class="fa fa-plus"></i> <b>Tambah Data Admin</b></button>
+                  </a>
+                </div>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -46,6 +63,7 @@
                       </td>
                     </tr>
                   @endforeach
+                </tbody>
               </table>
             </div>
             <!-- /.box-body -->
