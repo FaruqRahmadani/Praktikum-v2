@@ -66,7 +66,7 @@
                           <a href="/admin/dataadmin/{{ Crypt::encryptString($DataAdmin->id) }}/edit">
                             <button type="button" class="btn btn-info"> <i class="fa fa-pencil"></i> <b>Edit</b></button>
                           </a>
-                            <button type="button" class="btn btn-danger" {{ $DataAdmin->username == Auth::guard('admin')->user()->username ? 'disabled' : '' }} onclick="hapus('{{ Crypt::encryptString($DataAdmin->id) }}','{{$DataAdmin->nama}}')"> <i class="fa fa-trash-o"></i> <b>Hapus</b></button>
+                            <button type="button" class="btn btn-danger"  onclick=" {{ $DataAdmin->username == Auth::guard('admin')->user()->username ? 'CantHapus' : 'hapus' }}('{{ Crypt::encryptString($DataAdmin->id) }}','{{$DataAdmin->nama}}')"> <i class="fa fa-trash-o"></i> <b>Hapus</b></button>
                         </center>
                       </td>
                     </tr>
@@ -94,6 +94,15 @@
 
 {{-- Validasi Hapus Data  --}}
 <script>
+  function CantHapus(id,nama)
+  {
+    swal({
+      title : "Hapus",
+      text  : "Tidak Dapat Mehapus Data Sendiri",
+      icon  : "warning",
+    });
+}
+
   function hapus(id,nama)
   {
     swal({
