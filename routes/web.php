@@ -35,6 +35,8 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin/dataadmin/tambah', 'AdminController@TambahDataAdmin');
   Route::POST('/admin/dataadmin/tambah', 'AdminController@storeTambahDataAdmin');
   Route::get('/admin/dataadmin/{id}/edit', 'AdminController@EditDataAdmin');
+  Route::POST('/admin/dataadmin/{id}/edit', 'AdminController@storeEditDataAdmin');
+  Route::get('/admin/dataadmin/{id}/hapus', 'AdminController@HapusDataAdmin');
 });
 
 //Route Admin Rahasia

@@ -17,9 +17,16 @@
             <div class="box-header">
               @if (session('success'))
                 <div class="callout callout-success">
-                  <h4>Berhasil</h4>
+                  <h4><i class="fa fa-check"></i> Berhasil</h4>
 
                   <p> {{ session('success') }} </p>
+                </div>
+              @endif
+              @if (session('warning'))
+                <div class="callout callout-warning">
+                  <h4><i class="fa fa-warning"></i> Berhasil Hapus</h4>
+
+                  <p> {{ session('warning') }} </p>
                 </div>
               @endif
 
@@ -59,6 +66,7 @@
                           <a href="/admin/dataadmin/{{ Crypt::encryptString($DataAdmin->id) }}/edit">
                             <button type="button" class="btn btn-info"> <i class="fa fa-pencil"></i> <b>Edit</b></button>
                           </a>
+                            <button type="button" class="btn btn-danger" {{ $DataAdmin->username == Auth::guard('admin')->user()->username ? 'disabled' : '' }} onclick="hapus('{{ Crypt::encryptString($DataAdmin->id) }}','{{$DataAdmin->nama}}')"> <i class="fa fa-trash-o"></i> <b>Hapus</b></button>
                         </center>
                       </td>
                     </tr>
@@ -83,4 +91,40 @@
 
 </div>
 </body>
+
+{{-- Validasi Hapus Data  --}}
+<script>
+  function hapus(id,nama)
+  {
+    swal({
+      title   : "Hapus",
+      text    : "Yakin Ingin Menghapus Data Admin '"+nama+"'?",
+      icon    : "error",
+      buttons : [
+        "Batal",
+        "Hapus",
+      ],
+    })
+    .then((hapus) => {
+      if (hapus) {
+        swal({
+          title  : "Berhasil",
+          text   : "Data Admin '"+nama+"' Berhasil di Hapus",
+          icon   : "success",
+          timer  : 5000,
+          button : false,
+        });
+        window.location = "/admin/dataadmin/"+id+"/hapus";
+      } else {
+        swal({
+          title  : "Batal Hapus",
+          text   : "Data Admin '"+nama+"' Batal di Hapus",
+          icon   : "info",
+          timer  : 2011,
+          button : false,
+        })
+      }
+    });
+  }
+</script>
 @endsection

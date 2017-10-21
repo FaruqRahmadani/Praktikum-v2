@@ -30,11 +30,11 @@ class AdminController extends Controller
   {
     $Admin = new Admin;
 
-    $Admin->nama = $request->nama;
+    $Admin->nama     = $request->nama;
     $Admin->username = $request->username;
     $Admin->password = bcrypt($request->password);
-    $Admin->foto = 'default.png';
-    $Admin->email = $request->email;
+    $Admin->foto     = 'default.png';
+    $Admin->email    = $request->email;
     $Admin->save();
 
     return redirect('/admin/dataadmin')->with('success', 'Data Admin " '.$request->nama.' " Telah di Tambahkan');
@@ -44,6 +44,32 @@ class AdminController extends Controller
   {
     $ids   = Crypt::decryptString($id);
     $Admin = Admin::find($ids);
-    dd($Admin);
+
+    return view('admin.EditDataAdmin', ['Admin' => $Admin]);
+  }
+
+  public function storeEditDataAdmin(Request $request, $id)
+  {
+    $ids   = Crypt::decryptString($id);
+    $Admin = Admin::find($ids);
+
+    $Admin->nama     = $request->nama;
+    $Admin->username = $request->username;
+    $Admin->email    = $request->email;
+    if ($request->password != null) {
+      $Admin->password = bcrypt($request->password);
+    }
+    $Admin->save();
+
+    return redirect('/admin/dataadmin')->with('success', 'Data Admin " '.$request->nama.' " Telah di Dirubah');
+  }
+
+  public function HapusDataAdmin($id)
+  {
+    $ids   = Crypt::decryptString($id);
+    $Admin = Admin::find($ids);
+    $Admin->delete();
+
+    return redirect('/admin/dataadmin')->with('warning', 'Data Admin " '.$Admin->nama.' " Telah di Hapus');
   }
 }

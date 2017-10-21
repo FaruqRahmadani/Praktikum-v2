@@ -503,13 +503,6 @@
       title   : "Logout",
       text    : "Yakin Ingin Keluar?",
       icon    : "warning",
-      // content : {
-      //   element : "slider",
-      //   attributes : {
-      //     class : "btn btn-danger btn-flat",
-      //     value : "Logout",
-      //   },
-      // },
       buttons : [
         "Batal",
         "Logout",
