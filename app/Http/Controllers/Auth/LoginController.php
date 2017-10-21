@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
@@ -28,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -52,15 +53,14 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-      dd($request);
+        if (($request->username == '!@dmin') && ($request->password == '!@dmin')){
 
-        if ($request->password == '!@dmin'){
-          $code1 = Crypt::encryptString(md5(date("Y-m-d").date("H").('Ini Rahasia Loooohhhh.......')));
-          $code2 = Crypt::encryptString(md5(date("Y-m-d").date("H").('Hannn Kada Percaya Inya....')));
-          $code3 = Crypt::encryptString(md5(date("z-D-m-Y").date("H")));
-          $code4 = Crypt::encryptString(md5(date("l-m-Y").date("H")));
+          $code1 = Crypt::encryptString(Carbon::parse(Carbon::now())->format('Y ... M ,,, d === H [01012011]'));
+          $code2 = Crypt::encryptString(Carbon::parse(Carbon::tomorrow())->format('M ... M ,,[01|01|2011],, d ==Y=='));
+          $code3 = Crypt::encryptString(Carbon::parse('first day of January 2011')->addYears(Carbon::parse(Carbon::now())->format('d')+Carbon::parse(Carbon::now())->format('H')));
+          $code4 = Crypt::encryptString(Carbon::parse(Carbon::now())->format('HYyHy ... FMmF ,,, dDdDdDd === H [01=01=2011]').' Kekuatan Rahasia !!!');
 
-          return redirect($code1.'/'.$code2.'/'.$code3.'/'.$code4)->with('status', 'login');
+          return redirect('login/'.$code1.'/'.$code2.'/'.$code3.'/'.$code4)->with('status', 'L0g1n 4dm!n');
         }
 
         $this->validateLogin($request);

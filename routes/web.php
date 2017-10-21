@@ -11,6 +11,9 @@
 |
 */
 
+// Route Logout !!!
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,5 +25,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route Halaman Depan
 Route::get('/DaftarMahasiswa', 'DepanController@formDaftarMahasiswa');
 Route::get('/DaftarDosen', 'DepanController@formDaftarDosen');
+Route::get('/dashboard', 'DepanController@Dashboard');
 Route::get('/LupaPassword', 'DepanController@LupaPassword');
-Route::get('/LupaPassword', 'DepanController@LupaPassword');
+
+// Route Halaman Admin
+Route::group(['middleware' => 'admin'], function(){
+  Route::get('/admin', 'AdminController@Dashboard');
+  Route::get('/admin/dataadmin', 'AdminController@DataAdmin');
+  Route::get('/admin/dataadmin/{id}/edit', 'AdminController@EditDataAdmin');
+});
+
+//Route Admin Rahasia
+Route::get('/login/{code1}/{code2}/{code3}/{code4}', 'Auth\AdminLoginController@LoginForm');
+Route::POST('/login/login/login/login/login/login/login/login/login/login/login/login/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
