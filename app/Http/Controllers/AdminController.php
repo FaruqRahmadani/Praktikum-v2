@@ -6,9 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
+use File;
 use App\User;
 use App\Admin;
 use App\Dosen;
+use App\Materi;
 use App\Periode;
 use App\Mahasiswa;
 
@@ -208,5 +210,70 @@ class AdminController extends Controller
     $Periode->delete();
 
     return redirect('/admin/periode')->with('warning', 'Data Periode Telah di Hapus');
+  }
+
+  public function Materi()
+  {
+    $Materi = Materi::all();
+
+    return view('admin.Materi', ['Materi' => $Materi]);
+  }
+
+  public function TambahMateri()
+  {
+    return view('admin.TambahMateri');
+  }
+
+  public function storeTambahMateri(Request $request)
+  {
+    $Materi = Materi::all();
+    // Menentukan Nama Gambar Yang Akan Disimpan
+    $idMateri   = (count($Materi) == 0 ? 1 : $Materi->last()->id + 1);
+    $namaGambar = 'materi-'.$idMateri.'.'.$request->Gambar->getClientOriginalExtension();
+
+    // Menyimpan Gambar
+    $request->Gambar->move(public_path('image/materi'), $namaGambar);
+
+    // Memulai Proses Simpan
+    $Materi = new Materi;
+
+    $Materi->kode_mk          = $request->KodeMateri;
+    $Materi->materi_praktikum = $request->NamaMateri;
+    $Materi->semester         = $request->Semester;
+    $Materi->gambar           = $namaGambar;
+
+    $Materi->save();
+
+    return redirect('/admin/materi')->with('success', 'Data Materi " '.$request->NamaMateri.' " Telah di Tambahkan');
+  }
+
+  public function EditMateri($id)
+  {
+    $ids    = Crypt::decryptString($id);
+    $Materi = Materi::find($ids);
+
+    return view('admin.EditMateri', ['Materi' => $Materi]);
+  }
+
+  public function storeEditMateri(Request $request, $id)
+  {
+    $ids    = Crypt::decryptString($id);
+    $Materi = Materi::find($ids);
+
+    if ($request->Gambar != null) {
+      $namaGambar = 'materi-'.$ids.'.'.$request->Gambar->getClientOriginalExtension();
+      // Menghapus Gambar
+      File::delete('image/materi/'.$Materi->gambar);
+      // Menyimpan Gambar
+      $request->Gambar->move(public_path('image/materi'), $namaGambar);
+    }
+
+    $Materi->kode_mk          = $request->KodeMateri;
+    $Materi->materi_praktikum = $request->NamaMateri;
+    $Materi->semester         = $request->Semester;
+    $Materi->gambar           = $namaGambar;
+    $Materi->save();
+
+    return redirect('/admin/materi')->with('success', 'Data Materi " '.$request->NamaMateri.' " Telah di Ubah');
   }
 }

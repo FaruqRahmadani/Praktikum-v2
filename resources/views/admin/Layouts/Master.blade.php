@@ -328,7 +328,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/admin/periode"><i class="fa fa-calendar-o"></i> Periode</a></li>
-          <li><a href="/admin/datamahasiswa"><i class="fa fa-book"></i> Materi</a></li>
+          <li><a href="/admin/materi"><i class="fa fa-book"></i> Materi</a></li>
         </ul>
       </li>
 

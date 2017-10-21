@@ -53,6 +53,12 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin/periode/{id}/edit', 'AdminController@EditPeriode');
   Route::POST('/admin/periode/{id}/edit', 'AdminController@storeEditPeriode');
   Route::get('/admin/periode/{id}/hapus', 'AdminController@HapusPeriode');
+  // Bagian Data Materi
+  Route::get('/admin/materi', 'AdminController@Materi');
+  Route::get('/admin/materi/tambah', 'AdminController@TambahMateri');
+  Route::POST('/admin/materi/tambah', 'AdminController@storeTambahMateri');
+  Route::get('/admin/materi/{id}/edit', 'AdminController@EditMateri');
+  Route::POST('/admin/materi/{id}/edit', 'AdminController@storeEditMateri');
 
 });
 
