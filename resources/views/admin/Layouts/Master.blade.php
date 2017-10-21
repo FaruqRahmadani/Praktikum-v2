@@ -319,6 +319,19 @@
         </ul>
       </li>
 
+      <li class="treeview menu">
+        <a href="#">
+          <i class="fa fa-database"></i> <span>Data Master</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/admin/periode"><i class="fa fa-calendar-o"></i> Periode</a></li>
+          <li><a href="/admin/datamahasiswa"><i class="fa fa-book"></i> Materi</a></li>
+        </ul>
+      </li>
+
       <li class="active treeview menu-open">
         <a href="#">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>

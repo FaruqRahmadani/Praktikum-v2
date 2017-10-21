@@ -9,6 +9,7 @@ use Auth;
 use App\User;
 use App\Admin;
 use App\Dosen;
+use App\Periode;
 use App\Mahasiswa;
 
 class AdminController extends Controller
@@ -150,5 +151,62 @@ class AdminController extends Controller
     $User->save();
 
     return redirect('/admin/datadosen')->with('success', 'Data Dosen " '.$request->nama.' " Telah di Dirubah');
+  }
+
+  public function Periode()
+  {
+    $Periode = Periode::all();
+
+    return view('admin.Periode', ['Periode' => $Periode]);
+  }
+
+  public function TambahPeriode()
+  {
+    return view('admin.TambahPeriode');
+  }
+
+  public function storeTambahPeriode(Request $request)
+  {
+    $Periode = new Periode;
+
+    $Periode->periode       = $request->NamaPeriode;
+    $Periode->tanggal_tutup = $request->TanggalTutup;
+    $Periode->status        = 1;
+
+    $Periode->save();
+
+    return redirect('/admin/periode')->with('success', 'Data Periode " '.$request->NamaPeriode.' " Telah di Tambahkan');
+  }
+
+  public function EditPeriode($id)
+  {
+    $ids     = Crypt::decryptString($id);
+    $Periode = Periode::find($ids);
+
+    return view('admin.EditPeriode', ['Periode' => $Periode]);
+  }
+
+  public function storeEditPeriode(Request $request, $id)
+  {
+    $ids     = Crypt::decryptString($id);
+    $Periode = Periode::find($ids);
+
+    $Periode->periode       = $request->NamaPeriode;
+    $Periode->tanggal_tutup = $request->TanggalTutup;
+    $Periode->status        = $request->status;
+
+    $Periode->save();
+
+    return redirect('/admin/periode')->with('success', 'Data Periode " '.$request->NamaPeriode.' " Telah di Rubah');
+  }
+
+  public function HapusPeriode($id)
+  {
+    $ids     = Crypt::decryptString($id);
+    $Periode = Periode::find($ids);
+
+    $Periode->delete();
+
+    return redirect('/admin/periode')->with('warning', 'Data Periode Telah di Hapus');
   }
 }

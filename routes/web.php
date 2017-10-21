@@ -46,6 +46,14 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin/datadosen', 'AdminController@DataDosen');
   Route::get('/admin/datadosen/{id}/edit', 'AdminController@EditDataDosen');
   Route::POST('/admin/datadosen/{id}/edit', 'AdminController@storeEditDataDosen');
+  // Bagian Data Periode
+  Route::get('/admin/periode', 'AdminController@Periode');
+  Route::get('/admin/periode/tambah', 'AdminController@TambahPeriode');
+  Route::POST('/admin/periode/tambah', 'AdminController@storeTambahPeriode');
+  Route::get('/admin/periode/{id}/edit', 'AdminController@EditPeriode');
+  Route::POST('/admin/periode/{id}/edit', 'AdminController@storeEditPeriode');
+  Route::get('/admin/periode/{id}/hapus', 'AdminController@HapusPeriode');
+
 });
 
 //Route Admin Rahasia
