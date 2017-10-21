@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 use Auth;
 use App\User;
 use App\Admin;
+use App\Dosen;
 use App\Mahasiswa;
 
 class AdminController extends Controller
@@ -77,7 +78,8 @@ class AdminController extends Controller
 
   public function DataMahasiswa()
   {
-    $Mahasiswa = Mahasiswa::all();
+    $Mahasiswa = Mahasiswa::with('User')
+                          ->get();
 
     return view('admin.DataMahasiswa', ['Mahasiswa' => $Mahasiswa]);
   }
@@ -110,5 +112,43 @@ class AdminController extends Controller
     $User->save();
 
     return redirect('/admin/datamahasiswa')->with('success', 'Data Mahasiswa " '.$request->nama.' " Telah di Dirubah');
+  }
+
+  public function DataDosen()
+  {
+    $Dosen = Dosen::with('User')
+                  ->get();
+
+    return view('admin.DataDosen', ['Dosen' => $Dosen]);
+  }
+
+  public function EditDataDosen($id)
+  {
+    $ids   = Crypt::decryptString($id);
+    $Dosen = Dosen::find($ids);
+    $User  = User::find($Dosen->id_user);
+
+    return view('admin.EditDataDosen', ['Dosen' => $Dosen, 'User' => $User]);
+  }
+
+  public function storeEditDataDosen(Request $request, $id)
+  {
+    $ids   = Crypt::decryptString($id);
+    $Dosen = Dosen::find($ids);
+    $User  = User::find($Dosen->id_user);
+
+    $Dosen->NIDN    = $request->NIDN;
+    $Dosen->nama    = $request->nama;
+    $Dosen->no_hp   = $request->NomorHP;
+    $Dosen->email   = $request->email;
+    $User->username = $request->username;
+    if ($request->password != null) {
+      $User->password = bcrypt($request->password);
+    }
+
+    $Dosen->save();
+    $User->save();
+
+    return redirect('/admin/datadosen')->with('success', 'Data Dosen " '.$request->nama.' " Telah di Dirubah');
   }
 }

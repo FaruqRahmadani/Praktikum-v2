@@ -307,15 +307,15 @@
 
       <li class="treeview menu">
         <a href="#">
-          <i class="fa fa-table"></i> <span>Master Data</span>
+          <i class="fa fa-table"></i> <span>Data User</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
           <li><a href="/admin/dataadmin"><i class="fa fa-users"></i> Data Admin</a></li>
-          <li><a href="index.html"><i class="fa fa-users"></i> Data Dosen</a></li>
           <li><a href="/admin/datamahasiswa"><i class="fa fa-users"></i> Data Mahasiswa</a></li>
+          <li><a href="/admin/datadosen"><i class="fa fa-users"></i> Data Dosen</a></li>
         </ul>
       </li>
 

@@ -42,6 +42,10 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin/datamahasiswa', 'AdminController@DataMahasiswa');
   Route::get('/admin/datamahasiswa/{id}/edit', 'AdminController@EditDataMahasiswa');
   Route::POST('/admin/datamahasiswa/{id}/edit', 'AdminController@storeEditDataMahasiswa');
+  // Bagian Data Dosen
+  Route::get('/admin/datadosen', 'AdminController@DataDosen');
+  Route::get('/admin/datadosen/{id}/edit', 'AdminController@EditDataDosen');
+  Route::POST('/admin/datadosen/{id}/edit', 'AdminController@storeEditDataDosen');
 });
 
 //Route Admin Rahasia

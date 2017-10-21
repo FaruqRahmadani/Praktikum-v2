@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Mahasiswa
+        Data Dosen
       </h1>
     </section>
 
@@ -33,7 +33,7 @@
                   @endphp
                 <tr>
                   <th>#</th>
-                  <th>NPM</th>
+                  <th>NIDN</th>
                   <th>Nama</th>
                   <th>Nomor HP</th>
                   <th>E-Mail</th>
@@ -42,17 +42,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($Mahasiswa as $DataMahasiswa)
+                  @foreach ($Dosen as $DataDosen)
                     <tr>
                       <td>{{ $no+=1 }}</td>
-                      <td> {{ $DataMahasiswa->NPM }} </td>
-                      <td> {{ $DataMahasiswa->nama }} </td>
-                      <td> {{ $DataMahasiswa->no_hp }} </td>
-                      <td> {{ $DataMahasiswa->email }} </td>
-                      <td> {{ $DataMahasiswa->User->username }} </td>
+                      <td> {{ $DataDosen->NIDN }} </td>
+                      <td> {{ $DataDosen->nama }} </td>
+                      <td> {{ $DataDosen->no_hp }} </td>
+                      <td> {{ $DataDosen->email }} </td>
+                      <td> {{ $DataDosen->User->username }} </td>
                       <td>
                         <center>
-                          <a href="/admin/datamahasiswa/{{ Crypt::encryptString($DataMahasiswa->id) }}/edit">
+                          <a href="/admin/datadosen/{{ Crypt::encryptString($DataDosen->id) }}/edit">
                             <button type="button" class="btn btn-info"> <i class="fa fa-pencil"></i> <b>Edit</b></button>
                           </a>
                         </center>
