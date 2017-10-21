@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
+use App\User;
 use App\Admin;
+use App\Mahasiswa;
 
 class AdminController extends Controller
 {
@@ -71,5 +73,42 @@ class AdminController extends Controller
     $Admin->delete();
 
     return redirect('/admin/dataadmin')->with('warning', 'Data Admin " '.$Admin->nama.' " Telah di Hapus');
+  }
+
+  public function DataMahasiswa()
+  {
+    $Mahasiswa = Mahasiswa::all();
+
+    return view('admin.DataMahasiswa', ['Mahasiswa' => $Mahasiswa]);
+  }
+
+  public function EditDataMahasiswa($id)
+  {
+    $ids       = Crypt::decryptString($id);
+    $Mahasiswa = Mahasiswa::find($ids);
+    $User      = User::find($Mahasiswa->id_user);
+
+    return view('admin.EditDataMahasiswa', ['Mahasiswa' => $Mahasiswa, 'User' => $User]);
+  }
+
+  public function storeEditDataMahasiswa(Request $request, $id)
+  {
+    $ids       = Crypt::decryptString($id);
+    $Mahasiswa = Mahasiswa::find($ids);
+    $User      = User::find($Mahasiswa->id_user);
+
+    $Mahasiswa->NPM   = $request->NPM;
+    $Mahasiswa->nama  = $request->nama;
+    $Mahasiswa->no_hp = $request->NomorHP;
+    $Mahasiswa->email = $request->email;
+    $User->username   = $request->username;
+    if ($request->password != null) {
+      $User->password = bcrypt($request->password);
+    }
+
+    $Mahasiswa->save();
+    $User->save();
+
+    return redirect('/admin/datamahasiswa')->with('success', 'Data Mahasiswa " '.$request->nama.' " Telah di Dirubah');
   }
 }

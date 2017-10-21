@@ -315,7 +315,7 @@
         <ul class="treeview-menu">
           <li><a href="/admin/dataadmin"><i class="fa fa-users"></i> Data Admin</a></li>
           <li><a href="index.html"><i class="fa fa-users"></i> Data Dosen</a></li>
-          <li><a href="index2.html"><i class="fa fa-users"></i> Data Mahasiswa</a></li>
+          <li><a href="/admin/datamahasiswa"><i class="fa fa-users"></i> Data Mahasiswa</a></li>
         </ul>
       </li>
 
