@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Admin
+        Periode
       </h1>
     </section>
 
@@ -32,8 +32,8 @@
 
               <div class="row">
                 <div class="col-sm-2">
-                  <a href="/admin/dataadmin/tambah">
-                    <button type="button" class="btn btn-block btn-info btn"> <i class="fa fa-plus"></i> <b>Tambah Data Admin</b></button>
+                  <a href="/admin/periode/tambah">
+                    <button type="button" class="btn btn-block btn-info btn"> <i class="fa fa-plus"></i> <b>Tambah Periode Baru</b></button>
                   </a>
                 </div>
               </div>
@@ -48,25 +48,37 @@
                   @endphp
                 <tr>
                   <th>#</th>
-                  <th>Nama</th>
-                  <th>E-Mail</th>
-                  <th>Username</th>
+                  <th>Periode</th>
+                  <th>Tanggal Tutup</th>
+                  <th>Status</th>
                   <th><center> Aksi </center></th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($Admin as $DataAdmin)
+                  @foreach ($Periode as $DataPeriode)
                     <tr>
-                      <td>{{ $no+=1 }}</td>
-                      <td> {{ $DataAdmin->nama }} </td>
-                      <td> {{ $DataAdmin->email }} </td>
-                      <td> {{ $DataAdmin->username }} </td>
+                      <td> {{ $no+=1 }} </td>
+                      <td> {{ $DataPeriode->periode }} </td>
+                      <td> {{ $DataPeriode->tanggal_tutup }} </td>
                       <td>
                         <center>
-                          <a href="/admin/dataadmin/{{ Crypt::encryptString($DataAdmin->id) }}/edit">
+                          @if ($DataPeriode->status == 1)
+                            <span class="pull-right-container">
+                              <small class="label pull-center bg-green"><b>AKTIF</b></small>
+                            </span>
+                          @else
+                            <span class="pull-right-container">
+                              <small class="label pull-center bg-red"><b>TIDAK AKTIF</b></small>
+                            </span>
+                          @endif
+                        </center>
+                      </td>
+                      <td>
+                        <center>
+                          <a href="/admin/periode/{{ Crypt::encryptString($DataPeriode->id) }}/edit">
                             <button type="button" class="btn btn-info"> <i class="fa fa-pencil"></i> <b>Edit</b></button>
                           </a>
-                            <button type="button" class="btn btn-danger"  onclick=" {{ $DataAdmin->username == Auth::guard('admin')->user()->username ? 'CantHapus' : 'hapus' }}('{{ Crypt::encryptString($DataAdmin->id) }}','{{$DataAdmin->nama}}')"> <i class="fa fa-trash-o"></i> <b>Hapus</b></button>
+                            <button type="button" class="btn btn-danger" onclick="{{ count($DataPeriode->JadwalDosen) > 0 ? 'CantHapus' : 'hapus' }}('{{ Crypt::encryptString($DataPeriode->id) }}','{{$DataPeriode->periode}}')"> <i class="fa fa-trash-o"></i> <b>Hapus</b></button>
                         </center>
                       </td>
                     </tr>
@@ -98,16 +110,16 @@
   {
     swal({
       title : "Hapus",
-      text  : "Tidak Dapat Mehapus Data Sendiri",
+      text  : "Data Periode '"+nama+"' Tidak Dapat di Hapus Karena Ada Jadwal Dosen Yang Menggunakan Periode Tersebut",
       icon  : "warning",
     });
-}
+  }
 
   function hapus(id,nama)
   {
     swal({
       title   : "Hapus",
-      text    : "Yakin Ingin Menghapus Data Admin '"+nama+"'?",
+      text    : "Yakin Ingin Menghapus Data Periode '"+nama+"'?",
       icon    : "error",
       buttons : [
         "Batal",
@@ -118,16 +130,16 @@
       if (hapus) {
         swal({
           title  : "Berhasil",
-          text   : "Data Admin '"+nama+"' Berhasil di Hapus",
+          text   : "Data Periode '"+nama+"' Berhasil di Hapus",
           icon   : "success",
           timer  : 5000,
           button : false,
         });
-        window.location = "/admin/dataadmin/"+id+"/hapus";
+        window.location = "/admin/periode/"+id+"/hapus";
       } else {
         swal({
           title  : "Batal Hapus",
-          text   : "Data Admin '"+nama+"' Batal di Hapus",
+          text   : "Data Periode '"+nama+"' Batal di Hapus",
           icon   : "info",
           timer  : 2011,
           button : false,
