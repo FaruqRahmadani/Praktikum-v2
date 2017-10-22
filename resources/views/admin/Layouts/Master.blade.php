@@ -273,7 +273,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a href="/admin/editprofil" class="btn btn-default btn-flat">Edit Profil</a>
               </div>
               <div class="pull-right">
                 <button class="btn btn-default btn-flat" onclick="logout()"> Logout </button>
@@ -303,7 +303,15 @@
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MAIN NAVIGATION</li>
+      <li class="header">MENU NAVIGASI ADMIN</li>
+
+      <li class="view">
+        <a href="/admin">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          <span class="pull-right-container">
+          </span>
+        </a>
+      </li>
 
       <li class="treeview menu">
         <a href="#">

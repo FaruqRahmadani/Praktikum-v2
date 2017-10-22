@@ -31,6 +31,9 @@ Route::get('/LupaPassword', 'DepanController@LupaPassword');
 // Route Halaman Admin
 Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin', 'AdminController@Dashboard');
+  // Edit Profil
+  Route::get('/admin/editprofil', 'AdminController@EditProfil');
+  Route::POST('/admin/editprofil/{id}', 'AdminController@storeEditProfil');
   // Bagian Data Admin
   Route::get('/admin/dataadmin', 'AdminController@DataAdmin');
   Route::get('/admin/dataadmin/tambah', 'AdminController@TambahDataAdmin');

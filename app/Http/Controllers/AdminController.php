@@ -21,6 +21,54 @@ class AdminController extends Controller
     return view('admin.Dashboard');
   }
 
+  public function EditProfil()
+  {
+    $idAdmin = Auth::guard('admin')->user()->id;
+    $Admin   = Admin::find($idAdmin);
+
+    return view('admin.EditProfile', ['Admin' => $Admin]);
+  }
+
+  public function storeEditProfil(Request $request, $id)
+  {
+    $Admin = Admin::find($id);
+
+    $Admin->nama = $request->nama;
+    $Admin->email = $request->email;
+    $Admin->username = $request->username;
+
+    // Jika Ada Inputan Ganti Password
+    if ($request->password_lama != null) {
+      // Konfirmasi Password dan Re-Password Sama / Tidak
+      $this->validate($request, [
+        'password'      => 'confirmed',
+      ]);
+
+      if (Hash::check($request->password_lama, $Admin->password)) {
+        $Admin->password = $request->password;
+      }
+    }
+
+    // Jika Ada Inputan Foto
+    if($request->foto != null)
+    {
+      // Jika Bukan Foto Default, Hapus Dulu (Biar Hemat Space)
+      if ($Admin->foto != 'default.png') {
+        File::delete('image/admin/'.$Admin->foto);
+      }
+      // Menentukan Nama Gambar
+      $namaGambar = $id.'.'.$request->foto->getClientOriginalExtension();
+      // Menyimpan Gambar
+      $request->foto->move(public_path('image/admin'), $namaGambar);
+      // Menyimpan Nama Gambar di Database
+      $Admin->foto = $namaGambar;
+    }
+
+    $Admin->save();
+
+    return redirect('/admin')->with('success', 'Data Anda Telah di Ubah');
+  }
+
   public function DataAdmin()
   {
     $Admin = Admin::all();
