@@ -22,7 +22,7 @@ class DepanController extends Controller
     {
       $TipeUser = Auth::user()->tipe;
       if ($TipeUser == 1) {
-        dd('Dosen');
+        return redirect('/dosen');
       } else {
         dd('Mahasiswa');
       }

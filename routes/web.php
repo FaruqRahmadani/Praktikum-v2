@@ -18,15 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route Halaman Depan
 Route::get('/DaftarMahasiswa', 'DepanController@formDaftarMahasiswa');
 Route::get('/DaftarDosen', 'DepanController@formDaftarDosen');
-Route::get('/dashboard', 'DepanController@Dashboard');
 Route::get('/LupaPassword', 'DepanController@LupaPassword');
+
+// Login Sukses
+Route::get('/dashboard', 'DepanController@Dashboard');
+Route::get('/home', 'DepanController@Dashboard');
 
 // Route Halaman Admin
 Route::group(['middleware' => 'admin'], function(){
@@ -62,9 +64,16 @@ Route::group(['middleware' => 'admin'], function(){
   Route::POST('/admin/materi/tambah', 'AdminController@storeTambahMateri');
   Route::get('/admin/materi/{id}/edit', 'AdminController@EditMateri');
   Route::POST('/admin/materi/{id}/edit', 'AdminController@storeEditMateri');
+});
 
+// Route Halaman Dosen
+Route::group(['middleware' => 'dosen'], function(){
+  Route::get('/dosen', 'DosenController@Dashboard');
+  Route::get('/dosen/datamahasiswa', 'DosenController@DataMahasiswa');
+  Route::get('/dosen/datadosen', 'DosenController@DataDosen');
 });
 
 //Route Admin Rahasia
 Route::get('/login/{code1}/{code2}/{code3}/{code4}', 'Auth\AdminLoginController@LoginForm');
 Route::POST('/login/login/login/login/login/login/login/login/login/login/login/login/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+Auth::routes();
