@@ -328,14 +328,14 @@
 
       <li class="treeview menu">
         <a href="#">
-          <i class="fa fa-database"></i> <span>Data Master</span>
+          <i class="fa fa-database"></i> <span>Data Praktikum Saya</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/periode"><i class="fa fa-calendar-o"></i> Periode</a></li>
-          <li><a href="/admin/materi"><i class="fa fa-book"></i> Materi</a></li>
+          <li><a href="/dosen/datamateri"><i class="fa fa-book"></i> Materi</a></li>
+          <li><a href="/admin/periode"><i class="fa fa-calendar-o"></i> Jadwal</a></li>
         </ul>
       </li>
 

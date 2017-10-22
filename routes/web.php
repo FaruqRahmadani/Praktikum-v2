@@ -71,6 +71,11 @@ Route::group(['middleware' => 'dosen'], function(){
   Route::get('/dosen', 'DosenController@Dashboard');
   Route::get('/dosen/datamahasiswa', 'DosenController@DataMahasiswa');
   Route::get('/dosen/datadosen', 'DosenController@DataDosen');
+  Route::get('/dosen/datamateri', 'DosenController@DataMateri');
+  Route::get('/dosen/datamateri/{id}/hapus', 'DosenController@HapusDataMateri');
+  Route::get('/dosen/datamateri/ambil', 'DosenController@AmbilDataMateri');
+  Route::get('/dosen/datamateri/ambil/{id}', 'DosenController@storeAmbilDataMateri');
+  Route::get('/dosen/datamateri/ambil/{id}/{idDosen}/{idPeriode}/hapus', 'DosenController@HapusAmbilDataMateri');
 });
 
 //Route Admin Rahasia
