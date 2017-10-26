@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Dosen;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -33,6 +35,17 @@ class User extends Authenticatable
       }
       return false;
     }
+
+    public function isStatusDosen(){
+      $Status = Dosen::where('id_user', $this->id)
+                     ->first()
+                     ->status;
+      if ($Status == 1){
+        return true;
+      }
+      return false;
+    }
+
     public function isMahasiswa(){
       if ($this->tipe == 2){
         return true;

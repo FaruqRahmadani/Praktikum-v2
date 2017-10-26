@@ -257,13 +257,13 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="/image/admin/{{$DataUser->foto}}" class="user-image" alt="User Image">
+            <img src="/image/dosen/{{$DataUser->foto}}" class="user-image" alt="User Image">
             <span class="hidden-xs">{{$DataUser->nama}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="/image/admin/{{$DataUser->foto}}" class="img-circle" alt="User Image">
+              <img src="/image/dosen/{{$DataUser->foto}}" class="img-circle" alt="User Image">
 
               <p>
                 {{$DataUser->nama}}
@@ -273,7 +273,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="/admin/editprofil" class="btn btn-default btn-flat">Edit Profil</a>
+                <a href="/dosen/editprofil" class="btn btn-default btn-flat">Edit Profil</a>
               </div>
               <div class="pull-right">
                 <button class="btn btn-default btn-flat" onclick="logout()"> Logout </button>
@@ -294,7 +294,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="/image/admin/{{$DataUser->foto}}" class="img-circle" alt="User Image">
+        <img src="/image/dosen/{{$DataUser->foto}}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>{{$DataUser->nama}}</p>
@@ -335,7 +335,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/dosen/datamateri"><i class="fa fa-book"></i> Materi</a></li>
-          <li><a href="/admin/periode"><i class="fa fa-calendar-o"></i> Jadwal</a></li>
+          <li><a href="/dosen/jadwal"><i class="fa fa-calendar-o"></i> Jadwal</a></li>
         </ul>
       </li>
 

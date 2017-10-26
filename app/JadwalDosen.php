@@ -13,4 +13,9 @@ class JadwalDosen extends Model
     {
       return $this->belongsTo('App\Materi', 'id_praktikum');
     }
+
+    public function JadwalPraktikum()
+    {
+      return $this->hasMany('App\JadwalPraktikum', 'id_jadwal_dosen');
+    }
 }

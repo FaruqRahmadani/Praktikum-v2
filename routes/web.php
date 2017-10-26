@@ -69,13 +69,23 @@ Route::group(['middleware' => 'admin'], function(){
 // Route Halaman Dosen
 Route::group(['middleware' => 'dosen'], function(){
   Route::get('/dosen', 'DosenController@Dashboard');
-  Route::get('/dosen/datamahasiswa', 'DosenController@DataMahasiswa');
-  Route::get('/dosen/datadosen', 'DosenController@DataDosen');
-  Route::get('/dosen/datamateri', 'DosenController@DataMateri');
-  Route::get('/dosen/datamateri/{id}/hapus', 'DosenController@HapusDataMateri');
-  Route::get('/dosen/datamateri/ambil', 'DosenController@AmbilDataMateri');
-  Route::get('/dosen/datamateri/ambil/{id}', 'DosenController@storeAmbilDataMateri');
-  Route::get('/dosen/datamateri/ambil/{id}/{idDosen}/{idPeriode}/hapus', 'DosenController@HapusAmbilDataMateri');
+    Route::group(['middleware' => 'statusdosen'], function(){
+    Route::get('/dosen/datamahasiswa', 'DosenController@DataMahasiswa');
+    Route::get('/dosen/datadosen', 'DosenController@DataDosen');
+    Route::get('/dosen/datamateri', 'DosenController@DataMateri');
+    Route::get('/dosen/datamateri/{id}/hapus', 'DosenController@HapusDataMateri');
+    Route::get('/dosen/datamateri/ambil', 'DosenController@AmbilDataMateri');
+    Route::get('/dosen/datamateri/ambil/{id}', 'DosenController@storeAmbilDataMateri');
+    Route::get('/dosen/datamateri/ambil/{id}/{idDosen}/{idPeriode}/hapus', 'DosenController@HapusAmbilDataMateri');
+    Route::get('/dosen/jadwal', 'DosenController@DataJadwal');
+    Route::get('/dosen/jadwal/tambah', 'DosenController@TambahDataJadwal');
+    Route::POST('/dosen/jadwal/tambah', 'DosenController@storeTambahDataJadwal');
+    Route::get('/dosen/jadwal/{id}/edit', 'DosenController@EditDataJadwal');
+    Route::POST('/dosen/jadwal/{id}/edit', 'DosenController@storeEditDataJadwal');
+    Route::get('/dosen/jadwal/{id}/status/{status}', 'DosenController@UbahStatusDataJadwal');
+    Route::get('/dosen/editprofil', 'DosenController@EditProfile');
+    Route::POST('/dosen/editprofil/{iduser}', 'DosenController@storeEditProfile');
+  });
 });
 
 //Route Admin Rahasia
