@@ -92,6 +92,8 @@ Route::group(['middleware' => 'dosen'], function(){
 // Route Halaman Mahasiswa
 Route::group(['middleware' => 'mahasiswa'], function(){
   route::get('/mahasiswa', 'MahasiswaController@Dashboard');
+  route::get('/mahasiswa/materi', 'MahasiswaController@DataMateri');
+  route::get('/mahasiswa/materi/{id}', 'MahasiswaController@DataMateriDetail');
 });
 
 //Route Admin Rahasia

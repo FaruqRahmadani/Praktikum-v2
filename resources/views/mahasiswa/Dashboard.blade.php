@@ -6,7 +6,7 @@
     <section class="content-header">
       <h1>
         Dashboard
-        <small>Dosen</small>
+        <small>Mahasiswa</small>
       </h1>
     </section>
 

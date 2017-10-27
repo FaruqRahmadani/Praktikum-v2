@@ -314,12 +314,12 @@ class AdminController extends Controller
       File::delete('image/materi/'.$Materi->gambar);
       // Menyimpan Gambar
       $request->Gambar->move(public_path('image/materi'), $namaGambar);
+      $Materi->gambar           = $namaGambar;
     }
 
     $Materi->kode_mk          = $request->KodeMateri;
     $Materi->materi_praktikum = $request->NamaMateri;
     $Materi->semester         = $request->Semester;
-    $Materi->gambar           = $namaGambar;
     $Materi->save();
 
     return redirect('/admin/materi')->with('success', 'Data Materi " '.$request->NamaMateri.' " Telah di Ubah');

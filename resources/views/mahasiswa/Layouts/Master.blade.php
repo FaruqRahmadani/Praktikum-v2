@@ -312,6 +312,13 @@
           </span>
         </a>
       </li>
+      <li class="view">
+        <a href="/mahasiswa/materi">
+          <i class="fa fa-get-pocket"></i> <span>Ambil Materi</span>
+          <span class="pull-right-container">
+          </span>
+        </a>
+      </li>
 
       <li class="treeview menu">
         <a href="#">

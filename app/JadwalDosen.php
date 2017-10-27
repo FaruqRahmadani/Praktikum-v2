@@ -18,4 +18,9 @@ class JadwalDosen extends Model
     {
       return $this->hasMany('App\JadwalPraktikum', 'id_jadwal_dosen');
     }
+
+    public function Dosen()
+    {
+      return $this->belongsTo('App\Dosen', 'id_dosen');
+    }
 }
