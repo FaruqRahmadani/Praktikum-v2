@@ -20,11 +20,16 @@ class DepanController extends Controller
 
     public function Dashboard()
     {
-      $TipeUser = Auth::user()->tipe;
-      if ($TipeUser == 1) {
-        return redirect('/dosen');
+      $User = Auth::user();
+
+      if ($User) {
+        if ($User->tipe == 1) {
+          return redirect('/dosen');
+        } else {
+          return redirect('/mahasiswa');
+        }
       } else {
-        dd('Mahasiswa');
+        abort('404');
       }
 
     }
