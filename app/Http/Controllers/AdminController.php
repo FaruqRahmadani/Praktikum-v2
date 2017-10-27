@@ -324,4 +324,21 @@ class AdminController extends Controller
 
     return redirect('/admin/materi')->with('success', 'Data Materi " '.$request->NamaMateri.' " Telah di Ubah');
   }
+
+  public function EditStatusDosen($id,$status)
+  {
+    $ids   = Crypt::decryptString($id);
+    $Dosen = Dosen::find($ids);
+
+    if ($status == 'Aktif') {
+      $Status = 1;
+    } else {
+      $Status = 0;
+    }
+
+    $Dosen->status = $Status;
+    $Dosen->save();
+
+    return redirect('/admin/datadosen')->with('success', 'Status Dosen " '.$Dosen->nama.' " Telah di Dirubah Menjadi '.$status);
+  }
 }

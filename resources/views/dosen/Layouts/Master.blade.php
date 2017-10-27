@@ -312,7 +312,9 @@
           </span>
         </a>
       </li>
+{{-- SEMBUNYIKAN JIKA STATUS 0 --}}
 
+    @if ($DataUser->status == 1)
       <li class="treeview menu">
         <a href="#">
           <i class="fa fa-table"></i> <span>Data User</span>
@@ -338,7 +340,9 @@
           <li><a href="/dosen/jadwal"><i class="fa fa-calendar-o"></i> Jadwal</a></li>
         </ul>
       </li>
+    @endif
 
+{{-- SAMPAI SINI --}}
       <li class="active treeview menu-open">
         <a href="#">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>

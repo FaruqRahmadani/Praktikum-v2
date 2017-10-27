@@ -51,6 +51,7 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('/admin/datadosen', 'AdminController@DataDosen');
   Route::get('/admin/datadosen/{id}/edit', 'AdminController@EditDataDosen');
   Route::POST('/admin/datadosen/{id}/edit', 'AdminController@storeEditDataDosen');
+  Route::get('/admin/datadosen/{id}/status/{status}', 'AdminController@EditStatusDosen');
   // Bagian Data Periode
   Route::get('/admin/periode', 'AdminController@Periode');
   Route::get('/admin/periode/tambah', 'AdminController@TambahPeriode');
@@ -69,7 +70,7 @@ Route::group(['middleware' => 'admin'], function(){
 // Route Halaman Dosen
 Route::group(['middleware' => 'dosen'], function(){
   Route::get('/dosen', 'DosenController@Dashboard');
-    Route::group(['middleware' => 'statusdosen'], function(){
+  Route::group(['middleware' => 'statusdosen'], function(){
     Route::get('/dosen/datamahasiswa', 'DosenController@DataMahasiswa');
     Route::get('/dosen/datadosen', 'DosenController@DataDosen');
     Route::get('/dosen/datamateri', 'DosenController@DataMateri');
