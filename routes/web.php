@@ -89,6 +89,11 @@ Route::group(['middleware' => 'dosen'], function(){
   });
 });
 
+// Route Halaman Mahasiswa
+Route::group(['middleware' => 'mahasiswa'], function(){
+  route::get('/mahasiswa', 'MahasiswaController@Dashboard');
+});
+
 //Route Admin Rahasia
 Route::get('/login/{code1}/{code2}/{code3}/{code4}', 'Auth\AdminLoginController@LoginForm');
 Route::POST('/login/login/login/login/login/login/login/login/login/login/login/login/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
