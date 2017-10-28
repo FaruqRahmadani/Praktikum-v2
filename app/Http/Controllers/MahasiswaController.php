@@ -63,4 +63,27 @@ class MahasiswaController extends Controller
 
       return view('mahasiswa.DataMateriDetail', ['DataUser' => $DataUser, 'JadwalDosen' => $JadwalDosen, 'NamaMateri' => $NamaMateri]);
     }
+
+    public function storeDataMateriDetail(Request $request, $id, $idMahasiswa)
+    {
+      $idMateri        = Crypt::decryptString($id);
+      $JumlahPertemuan = count($request->except(['_token']));
+
+      for ($i=1; $i <= $JumlahPertemuan ; $i++) {
+        $this->validate($request, [
+          'Pertemuan'.$i => 'required'
+        ]);
+      }
+
+      // Simpan Ke Database
+      for ($i=1; $i <= $JumlahPertemuan ; $i++) {
+        $Pertemuan = 'Pertemuan'.$i;
+        $store = \App\AbsensiMahasiswa::create([
+            'id_mahasiswa'        => $idMahasiswa,
+            'id_jadwal_praktikum' => $request->$Pertemuan,
+        ]);
+      }
+
+      return redirect('/mahasiswa/materi')->with('success', 'Jadwal Materi Telah di Ambil');
+    }
 }

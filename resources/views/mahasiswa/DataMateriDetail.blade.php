@@ -14,7 +14,7 @@
     <section class="content">
       <div class="row">
         @foreach ($JadwalDosen as $DataJadwalDosen)
-          {!! Form::open(['url'=>Request::url(),'files'=>true,'class'=>'register-form', 'method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+          {!! Form::open(['url'=>Request::url().'/'.$DataUser->id,'files'=>true,'class'=>'register-form', 'method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form']) !!}
 
           <div class="form-group">
             <label class="col-lg-3 control-label">Materi</label>
@@ -54,11 +54,12 @@
               <div class="col-lg-8">
                 <div class="input-group">
                   <!-- /btn-group -->
-                  <input type="text" class="form-control" required readonly style="background-color : white;" data-toggle="modal" data-target="#modal-pertemuan-{{$i}}">
+                  <input type="text" class="form-control" id="DumpPertemuan{{$i}}" required readonly style="background-color : white;" data-toggle="modal" data-target="#modal-pertemuan-{{$i}}">
                   <div class="input-group-btn">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pertemuan-{{$i}}"><b>Pilih Jadwal</b></button>
                   </div>
                 </div>
+                <input type="hidden" name="Pertemuan{{$i}}" id="IDpertemuan{{$i}}" class="form-control" required>
               </div>
             </div>
           @endfor
@@ -92,12 +93,7 @@
                 <div class="modal-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
-                      @php
-                        // Meninialisasi Nomor
-                        $no = 0;
-                      @endphp
                     <tr>
-                      <th>#</th>
                       <th>Nama Kelas</th>
                       <th>Ruangan</th>
                       <th>Tanggal</th>
@@ -111,7 +107,6 @@
                       @foreach ($DataJadwalDosen->JadwalPraktikum as $DataJadwalPraktikum)
                         @if ($DataJadwalPraktikum->pertemuan == $i)
                           <tr>
-                            <td> {{ $no+=1 }} </td>
                             <td> {{ $DataJadwalPraktikum->nama_kelas }} </td>
                             <td> {{ $DataJadwalPraktikum->ruangan }} </td>
                             <td> {{ Carbon\Carbon::parse($DataJadwalPraktikum->tanggal)->format('d F Y') }} </td>
@@ -127,7 +122,7 @@
                             </td>
                             <td>
                               <center>
-                                <button type="button" class="btn btn-info"> <i class="fa fa-check-circle"></i> <b>Pilih</b></button>
+                                <button type="button" class="btn btn-info" data-dismiss="modal" onclick="pilihJadwal('{{$i}}','{{$DataJadwalPraktikum->id}}','{{$DataJadwalPraktikum->nama_kelas}}','{{Carbon\Carbon::parse($DataJadwalPraktikum->tanggal)->format('d F Y')}}','{{Carbon\Carbon::parse($DataJadwalPraktikum->waktu_mulai)->format('H:i A')}}','{{Carbon\Carbon::parse($DataJadwalPraktikum->waktu_mulai)->format('H:i A')}}')"> <i class="fa fa-check-circle"></i> <b>Pilih</b></button>
                               </center>
                             </td>
                           </tr>
@@ -162,4 +157,12 @@
   </footer>
 </div>
 </body>
+
+<script>
+  function pilihJadwal(pertemuan,id,NamaKelas,Tanggal,WaktuMulai,WaktuSelesai)
+  {
+    document.getElementById('IDpertemuan'+pertemuan).value = id;
+    document.getElementById('DumpPertemuan'+pertemuan).value = NamaKelas+' | '+Tanggal+' | '+WaktuMulai+' - '+WaktuSelesai;
+  }
+</script>
 @endsection
