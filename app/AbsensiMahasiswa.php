@@ -16,10 +16,6 @@ class AbsensiMahasiswa extends Model
       return $this->hasOne('App\JadwalPraktikum', 'id', 'id_jadwal_praktikum');
     }
 
-    public function JadwalDosen(){
-      return $this->belongsTo('App\JadwalDosen', 'id', 'id_jadwal_dosen');
-    }
-
     public function Mahasiswa(){
       return $this->belongsTo('App\Mahasiswa', 'id_mahasiswa', 'id');
     }

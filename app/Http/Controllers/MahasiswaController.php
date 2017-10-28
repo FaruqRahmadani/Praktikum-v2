@@ -10,6 +10,8 @@ use App\Materi;
 use App\Periode;
 use App\Mahasiswa;
 use App\JadwalDosen;
+use App\JadwalPraktikum;
+use App\AbsensiMahasiswa;
 
 class MahasiswaController extends Controller
 {
@@ -43,7 +45,33 @@ class MahasiswaController extends Controller
                                  ->get()
                                  ->where('Materi.semester', '<=', $Semester);
 
-      return view('mahasiswa.DataMateri', ['DataUser' => $DataUser, 'Periode' => $Periode, 'JadwalDosen' => $JadwalDosen]);
+      // Mencek Jumlah Materi Dalam 1 Periode
+      $AbsensiMahasiswa = AbsensiMahasiswa::where('id_mahasiswa', $DataUser->id)
+                                          ->get();
+
+      $IndexIdJadwalPraktikum = 0;
+      $IdJadwalPraktikum[1]   = 01012011;
+      foreach ($AbsensiMahasiswa as $DataAbsensiMahasiswa) {
+        $IndexIdJadwalPraktikum += 1;
+        $IdJadwalPraktikum[$IndexIdJadwalPraktikum] = $DataAbsensiMahasiswa->id_jadwal_praktikum;
+      }
+
+      $JadwalPraktikum = JadwalPraktikum::with('JadwalDosen')
+                                        ->whereIn('id', $IdJadwalPraktikum)
+                                        ->get()
+                                        ->where('JadwalDosen.id_periode', $Periode->id);
+
+      $DumpIdJadwalDosen   = 0;
+      $JumlahMateridiAmbil = 0;
+      foreach ($JadwalPraktikum as $DataJadwalPraktikum) {
+        if ($DumpIdJadwalDosen != $DataJadwalPraktikum->id_jadwal_dosen) {
+          $DumpIdJadwalDosen = $DataJadwalPraktikum->id_jadwal_dosen;
+          $JumlahMateridiAmbil += 1;
+        }
+      }
+      // Sampai Sini Untuk Mencek Jumlah Materi Dalam 1 Periode
+
+      return view('mahasiswa.DataMateri', ['DataUser' => $DataUser, 'Periode' => $Periode, 'JadwalDosen' => $JadwalDosen, 'JumlahMateridiAmbil' => $JumlahMateridiAmbil]);
     }
 
     public function DataMateriDetail($id)
