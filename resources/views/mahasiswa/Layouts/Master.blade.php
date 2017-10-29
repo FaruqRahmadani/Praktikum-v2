@@ -328,6 +328,7 @@
           </span>
         </a>
       </li>
+    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
