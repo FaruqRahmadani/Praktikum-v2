@@ -303,7 +303,7 @@
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MENU NAVIGASI ADMIN</li>
+      <li class="header">MENU NAVIGASI MAHASISWA</li>
 
       <li class="view">
         <a href="/mahasiswa">
@@ -336,6 +336,15 @@
 
 @yield('content')
 
+<footer class="main-footer">
+  <div class="pull-right hidden-xs">
+    <b>Version</b> 2.0.0
+  </div>
+  <strong>Copyright &copy; 2017 <a href="https://btc.id/FaruqRahmadani.bitcoin" target="_blank">Utuh Lacuk</a>.</strong> All rights
+  reserved.
+</footer>
+</div>
+</body>
 <!-- JS Sweet Alert Logout -->
 <script>
   function logout()

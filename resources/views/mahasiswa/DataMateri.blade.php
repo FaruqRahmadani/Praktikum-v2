@@ -22,9 +22,15 @@
           </div>
           @elseif ($JumlahMateridiAmbil < 2)
             <div class="callout callout-info">
-              <h4><i class="fa fa-info"></i> Jumlah Materi</h4>
+              <h4><i class="fa fa-info-circle"></i> Jumlah Materi</h4>
 
               <p> Pada Periode <b>{{ $Periode->periode }}</b> Ini, Anda Telah Mengambil <b>{{$JumlahMateridiAmbil}}</b> Materi </p>
+            </div>
+          @elseif ($Periode->status == 0)
+            <div class="callout callout-danger">
+              <h4><i class="fa fa-info"></i> Periode</h4>
+
+              <p> Periode {{$Periode->periode}} Telah di Tutup</p>
             </div>
           @else
             <div class="callout callout-warning">
@@ -75,12 +81,12 @@
                   <!-- /.col -->
                   <div class="col-sm-4">
                     <div class="description-block">
-                      @if ($JumlahMateridiAmbil < 2)
+                      @if (($JumlahMateridiAmbil >= 2) || ($Periode->status == 0))
+                        <button class="btn btn-info btn-block btn-circle" disabled><b>Dikunci</b></button>
+                      @else
                         <a href="/mahasiswa/materi/{{Crypt::encryptString($DataJadwalDosen->id)}}">
                           <button class="btn btn-success btn-block btn-circle"><b>Informasi</b></button>
                         </a>
-                      @else
-                        <button class="btn btn-info btn-block btn-circle" disabled><b>Dikunci</b></button>
                       @endif
                     </div>
                     <!-- /.description-block -->
@@ -97,14 +103,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
-</div>
-</body>
 @endsection

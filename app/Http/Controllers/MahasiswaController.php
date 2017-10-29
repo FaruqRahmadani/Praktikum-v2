@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Crypt;
-use Carbon;
+use Carbon\Carbon;
 use App\Materi;
 use App\Periode;
 use App\Mahasiswa;
@@ -22,7 +22,56 @@ class MahasiswaController extends Controller
       $DataUser = Mahasiswa::where('id_user', $Auth->id)
                            ->first();
 
-      return view('mahasiswa.Dashboard', ['DataUser' => $DataUser]);
+      // Menentukan Semester Mahasiswa
+      $Angkatan = substr($DataUser->NPM,0,2);
+      (date('n') > 8) ? $TambahanSemester = 1 : $TambahanSemester = 0 ;
+      $Semester = ((date('y')-$Angkatan)*2)+$TambahanSemester;
+
+      $Periode  = Periode::orderBy('id', 'desc')
+                         ->get();
+
+      $JadwalDosen = JadwalDosen::with('Materi')
+                                ->where('id_periode', $Periode->first()->id)
+                                ->get()
+                                ->where('Materi.semester', '<=', $Semester);
+
+      // Mencek Jumlah Materi Dalam 1 Periode
+      $AbsensiMahasiswa = AbsensiMahasiswa::where('id_mahasiswa', $DataUser->id)
+                                          ->get();
+
+      $IndexIdJadwalPraktikum = 0;
+      $IdJadwalPraktikum[1]   = 01012011;
+      foreach ($AbsensiMahasiswa as $DataAbsensiMahasiswa) {
+        $IndexIdJadwalPraktikum += 1;
+        $IdJadwalPraktikum[$IndexIdJadwalPraktikum] = $DataAbsensiMahasiswa->id_jadwal_praktikum;
+      }
+      $JadwalPraktikum = JadwalPraktikum::with('JadwalDosen')
+                                        ->orderBy('id', 'asc')
+                                        ->whereIn('id', $IdJadwalPraktikum)
+                                        ->get()
+                                        ->where('JadwalDosen.id_periode', $Periode->first()->id);
+
+      $DumpIdJadwalDosen   = 0;
+      $JumlahMateridiAmbil = 0;
+      foreach ($JadwalPraktikum as $DataJadwalPraktikum) {
+        if ($DumpIdJadwalDosen != $DataJadwalPraktikum->id_jadwal_dosen) {
+          $DumpIdJadwalDosen = $DataJadwalPraktikum->id_jadwal_dosen;
+          $JumlahMateridiAmbil += 1;
+        }
+      }
+      // Sampai Sini Untuk Mencek Jumlah Materi Dalam 1 Periode
+
+      // Cek Jadwal Akan Datang
+      $TanggalSekarang = Carbon::now();
+      $JadwalPraktikumNext = JadwalPraktikum::with('JadwalDosen')
+                                        ->orderBy('tanggal', 'asc')
+                                        ->whereIn('id', $IdJadwalPraktikum)
+                                        ->get()
+                                        ->where('JadwalDosen.id_periode', $Periode->first()->id)
+                                        ->where('tanggal', '>=', $TanggalSekarang)
+                                        ->first();
+
+      return view('mahasiswa.Dashboard', ['DataUser' => $DataUser, 'Periode' => $Periode, 'JadwalDosen' => $JadwalDosen, 'JumlahMateridiAmbil' => $JumlahMateridiAmbil, 'JadwalPraktikumNext' => $JadwalPraktikumNext]);
     }
 
     public function DataMateri()
