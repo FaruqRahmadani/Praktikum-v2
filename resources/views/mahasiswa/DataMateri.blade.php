@@ -14,15 +14,21 @@
     <section class="content">
       <div class="row">
         <div class="col-sm-12">
-          @if ($JumlahMateridiAmbil <= 2)
-            <div class="callout callout-success">
-              <h4><i class="fa fa-warning"></i> Jumlah Materi</h4>
+          @if (count($JadwalDosen) == 0)
+          <div class="callout callout-warning">
+            <h4><i class="fa fa-info"></i> Materi</h4>
 
-              <p> Pada Periode <b>{{ $Periode->periode }}</b> Ini, Anda Telah Mengambil <b>{{$JumlahMateridiAmbil}}</b> </p>
+            <p> Materi Praktikum Belum Tersedia </p>
+          </div>
+          @elseif ($JumlahMateridiAmbil < 2)
+            <div class="callout callout-info">
+              <h4><i class="fa fa-info"></i> Jumlah Materi</h4>
+
+              <p> Pada Periode <b>{{ $Periode->periode }}</b> Ini, Anda Telah Mengambil <b>{{$JumlahMateridiAmbil}}</b> Materi </p>
             </div>
           @else
             <div class="callout callout-warning">
-              <h4><i class="fa fa-warning"></i> Jumlah Materi</h4>
+              <h4><i class="fa fa-info"></i> Jumlah Materi</h4>
 
               <p> Anda Telah Mengambil Jumlah Materi Maksimal Untuk Periode Ini </p>
             </div>
@@ -69,7 +75,7 @@
                   <!-- /.col -->
                   <div class="col-sm-4">
                     <div class="description-block">
-                      @if ($JumlahMateridiAmbil <= 2)
+                      @if ($JumlahMateridiAmbil < 2)
                         <a href="/mahasiswa/materi/{{Crypt::encryptString($DataJadwalDosen->id)}}">
                           <button class="btn btn-success btn-block btn-circle"><b>Informasi</b></button>
                         </a>

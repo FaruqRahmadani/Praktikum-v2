@@ -95,6 +95,8 @@ Route::group(['middleware' => 'mahasiswa'], function(){
   route::get('/mahasiswa/materi', 'MahasiswaController@DataMateri');
   route::get('/mahasiswa/materi/{id}', 'MahasiswaController@DataMateriDetail');
   route::POST('/mahasiswa/materi/{id}/{idMahasiswa}', 'MahasiswaController@storeDataMateriDetail');
+  route::get('/mahasiswa/jadwal', 'MahasiswaController@JadwalSaya');
+  route::POST('/mahasiswa/jadwal', 'MahasiswaController@JadwalSayaPeriode');
 });
 
 //Route Admin Rahasia

@@ -87,7 +87,28 @@ class MahasiswaController extends Controller
                                  ->with('Dosen')
                                  ->with('JadwalPraktikum')
                                  ->get();
+
       $NamaMateri  = $JadwalDosen->first()->Materi->materi_praktikum;
+
+      // Cek Apakah Sudah Ambil Atau Belum
+      $JadwalPraktikum = JadwalPraktikum::where('id_jadwal_dosen', $ids)
+                                        ->get();
+      $IndexIdJadwalPraktikum = 0;
+      $IdJadwalPraktikum[1]   = 01012011;
+      foreach ($JadwalPraktikum as $DataJadwalPraktikum) {
+        $IndexIdJadwalPraktikum += 1;
+        $IdJadwalPraktikum[$IndexIdJadwalPraktikum] = $DataJadwalPraktikum->id;
+      }
+
+      $AbsensiMahasiswa = AbsensiMahasiswa::where('id_mahasiswa', $DataUser->id)
+                                          ->whereIn('id_jadwal_praktikum', $IdJadwalPraktikum)
+                                          ->with('JadwalPraktikum')
+                                          ->get();
+
+      $JumlahAbsensiMahasiswa = count($AbsensiMahasiswa);
+      if ($JumlahAbsensiMahasiswa > 0) {
+        return view('mahasiswa.DataMateriDetailSudahAmbil', ['DataUser' => $DataUser, 'JadwalDosen' => $JadwalDosen, 'NamaMateri' => $NamaMateri, 'AbsensiMahasiswa' => $AbsensiMahasiswa]);
+      }
 
       return view('mahasiswa.DataMateriDetail', ['DataUser' => $DataUser, 'JadwalDosen' => $JadwalDosen, 'NamaMateri' => $NamaMateri]);
     }
@@ -113,5 +134,77 @@ class MahasiswaController extends Controller
       }
 
       return redirect('/mahasiswa/materi')->with('success', 'Jadwal Materi Telah di Ambil');
+    }
+
+    public function JadwalSaya()
+    {
+      $Auth     = Auth::user();
+      $DataUser = Mahasiswa::where('id_user', $Auth->id)
+                           ->first();
+
+      $Periode     = Periode::orderBy('id', 'desc')
+                            ->get();
+
+      $JadwalDosen = JadwalDosen::where('id_periode', $Periode->first()->id)
+                                ->get();
+      // Mengambil id Jadwal Dosen
+      $IndexIdJadwalDosen = 0;
+      $IdJadwalDosen[1]   = 01012011;
+      foreach ($JadwalDosen as $DataJadwalDosen) {
+        $IndexIdJadwalDosen += 1;
+        $IdJadwalDosen[$IndexIdJadwalDosen] = $DataJadwalDosen->id;
+      }
+
+      $JadwalPraktikum = JadwalPraktikum::whereIn('id_jadwal_dosen', $IdJadwalDosen)
+                                        ->get();
+      $IndexIdJadwalPraktikum = 0;
+      $IdJadwalPraktikum[1]   = 01012011;
+      foreach ($JadwalPraktikum as $DataJadwalPraktikum) {
+        $IndexIdJadwalPraktikum += 1;
+        $IdJadwalPraktikum[$IndexIdJadwalPraktikum] = $DataJadwalPraktikum->id;
+      }
+
+      $AbsensiMahasiswa = AbsensiMahasiswa::where('id_mahasiswa', $DataUser->id)
+                                          ->whereIn('id_jadwal_praktikum', $IdJadwalPraktikum)
+                                          ->get();
+
+      $NamaPeriode = $Periode->first()->periode;
+      return view('mahasiswa.JadwalSaya', ['DataUser' => $DataUser, 'Periode' => $Periode, 'AbsensiMahasiswa' => $AbsensiMahasiswa, 'NamaPeriode' => $NamaPeriode]);
+    }
+
+    public function JadwalSayaPeriode(Request $request)
+    {
+      $Auth     = Auth::user();
+      $DataUser = Mahasiswa::where('id_user', $Auth->id)
+                           ->first();
+
+      $Periode     = Periode::orderBy('id', 'desc')
+                            ->get();
+
+      $JadwalDosen = JadwalDosen::where('id_periode', $request->idPeriode)
+                                ->get();
+      // Mengambil id Jadwal Dosen
+      $IndexIdJadwalDosen = 0;
+      $IdJadwalDosen[1]   = 01012011;
+      foreach ($JadwalDosen as $DataJadwalDosen) {
+        $IndexIdJadwalDosen += 1;
+        $IdJadwalDosen[$IndexIdJadwalDosen] = $DataJadwalDosen->id;
+      }
+
+      $JadwalPraktikum = JadwalPraktikum::whereIn('id_jadwal_dosen', $IdJadwalDosen)
+                                        ->get();
+      $IndexIdJadwalPraktikum = 0;
+      $IdJadwalPraktikum[1]   = 01012011;
+      foreach ($JadwalPraktikum as $DataJadwalPraktikum) {
+        $IndexIdJadwalPraktikum += 1;
+        $IdJadwalPraktikum[$IndexIdJadwalPraktikum] = $DataJadwalPraktikum->id;
+      }
+
+      $AbsensiMahasiswa = AbsensiMahasiswa::where('id_mahasiswa', $DataUser->id)
+                                          ->whereIn('id_jadwal_praktikum', $IdJadwalPraktikum)
+                                          ->get();
+
+      $NamaPeriode = $Periode->find($request->idPeriode)->periode;
+      return view('mahasiswa.JadwalSaya', ['DataUser' => $DataUser, 'Periode' => $Periode, 'AbsensiMahasiswa' => $AbsensiMahasiswa, 'NamaPeriode' => $NamaPeriode, 'idPeriode' => $request->idPeriode]);
     }
 }
